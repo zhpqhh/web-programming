@@ -24,13 +24,13 @@ class ProductController extends Controller
             $result = DB::table(ProductController::$table)->where('id',$id)->first();
             if ($result == null)
             {
-                return Response::json(['error_message' => 'Продукта с ID = ' . $id . ' не существует.', 'error_type' =>'Bad request'], 400);
+                return ResponseHelper::BadRequestError('Продукта с ID = ' . $id . ' не существует.');
             }
             return Response::make((array)$result, 200);
         }
         catch(Exception $ex)
         {
-            return Response::json(['error_message' => $ex->getMessage(),'error_type' => get_class($ex)], 500);
+            return ResponseHelper::InternalServerError($ex);
         }
     }
 
@@ -45,7 +45,7 @@ class ProductController extends Controller
         }
         catch(Exception $ex)
         {
-            return Response::json(['error_message' => $ex->getMessage(),'error_type' => get_class($ex)], 500);
+            return ResponseHelper::InternalServerError($ex);
         }
 
         return $this->GetProduct($product['id']);
@@ -61,7 +61,7 @@ class ProductController extends Controller
         }
         catch(Exception $ex)
         {
-            return Response::json(['error_message' => $ex->getMessage(),'error_type' => get_class($ex)], 500);
+            return ResponseHelper::InternalServerError($ex);
         }
 
         return $this->GetProduct($product['id']);
@@ -81,7 +81,7 @@ class ProductController extends Controller
         }
         catch(Exception $ex)
         {
-            return Response::json(['error_message' => $ex->getMessage(),'error_type' => get_class($ex)], 500);
+            return ResponseHelper::InternalServerError($ex);
         }
         if ($result == false)
         {
